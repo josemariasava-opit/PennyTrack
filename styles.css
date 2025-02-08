@@ -44,13 +44,16 @@ h1,h2{
   background-color: var(--bg-primary);
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   padding: 0.5rem;
+  display: flex;
 }
+
 .nav-container {
   max-width: 1200px;
   margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .nav-links {
   list-style: none;
@@ -200,7 +203,27 @@ table.striped tr td button {
   .tracker-layout {
     flex-direction: column;
   }
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers nav links */
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    width: 100%; /* Ensures the links span across the width of the screen */
+    text-align: center; /* Centers text */
+  }
+
+  .theme-toggle {
+    font-size: 1.5rem; /* Make the toggle larger on mobile */
+    padding: 0.6rem;
+  }
+
+  .navbar {
+    padding: 1rem 0; /* Add more padding for mobile */
+  }
 }
+
 
 /* Chart Container */
 .chart-container {
