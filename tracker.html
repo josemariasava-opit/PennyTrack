@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinTrack Pro – Tracker</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Include Chart.js for any additional charts if needed -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Include Highcharts for tracker charts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <!-- Apply dark mode immediately in head -->
+    <script>
+      if (localStorage.getItem("darkMode") === "true") {
+        document.documentElement.classList.add("dark-mode");
+        document.body.classList.add("dark-mode");
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="logo-container">
+            <a href="index.html" class="brand">
+              <span class="brand-icon">💰</span>
+              <span class="brand-text">FinTrack</span>
+            </a>
+          </div>
+          <div class="nav-right">
+            <ul class="nav-links">
+              <li><a href="index.html" class="nav-link">Home</a></li>
+              <li><a href="tracker.html" class="nav-link">Tracker</a></li>
+              <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <button id="darkModeToggle" class="theme-toggle">🌓</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="tracker-main">
+      <!-- Full-page layout with two panels -->
+      <div class="tracker-layout">
+        <!-- Left Panel: Form, Filters & Transactions Table -->
+        <div class="left-panel">
+          <section class="form-section">
+            <h2>Add Transaction</h2>
+            <form id="transactionForm">
+              <div class="input-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" required>
+              </div>
+              <div class="input-group">
+                <label for="type">Type</label>
+                <select id="type" required>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="category">Category</label>
+                <input type="text" id="category" placeholder="e.g. Salary, Groceries" required>
+              </div>
+              <div class="input-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" placeholder="Enter amount" required>
+              </div>
+              <button type="submit" class="btn" id="saveTransaction">Add Transaction</button>
+              <button type="button" class="btn" id="cancelEdit" style="display:none;">Cancel Edit</button>
+            </form>
+          </section>
+          <!-- Filter Section -->
+          <section class="filter-section">
+            <h2>Filter Transactions</h3>
+            <div class="input-group">
+              <label for="filterYear">Year:</label>
+              <input type="number" id="filterYear" placeholder="e.g., 2025">
+            </div>
+            <div class="input-group">
+              <label for="filterMonth">Month:</label>
+              <input type="number" id="filterMonth" placeholder="1-12" min="1" max="12">
+            </div>
+            <div class="input-group">
+              <label for="filterCategory">Category:</label>
+              <input type="text" id="filterCategory" placeholder="e.g., Groceries">
+            </div>
+          </section>
+          <!-- Transactions Table -->
+          <section class="transactions-section">
+            <h2 id="transactionsHeader">Transactions</h2>
+            <div id="transactionsTable">
+              <div class="import-export-container">
+                <input type="file" id="importCSV" accept=".csv" class="file-input" style="display: none";>
+                <button id="importCSVButton" class="btn">Import CSV</button>
+                <button id="exportCSV" class="btn">Export CSV</button>
+              </div>              
+              <table class="striped">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionsBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <!-- Right Panel: Charts -->
+        <div class="right-panel">
+          <section class="charts-section">
+            <div class="chart-container" id="balanceChartContainer">
+              <h3>Total Balance Over Time</h3>
+              <div id="balanceChart" style="width:100%; height:300px;"></div>
+            </div>
+            <div class="chart-container" id="categoryChartContainer">
+              <h3>Expenses by Category</h3>
+              <div id="categoryChart" style="width:100%; height:300px;"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

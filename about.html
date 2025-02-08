@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinTrack Pro – About</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("dark-mode");
+      document.body.classList.add("dark-mode");
+    }
+  </script>
+</head>
+<body>
+  <header class="modern-header">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo-container">
+          <a href="index.html" class="brand">
+            <span class="brand-icon">💰</span>
+            <span class="brand-text">FinTrack</span>
+          </a>
+        </div>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="tracker.html" class="nav-link">Tracker</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+          </ul>
+          <button id="darkModeToggle" class="theme-toggle">🌓</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="about-main container">
+    <section class="about-content">
+      <h1>About FinTrack Pro</h1>
+      <p>
+        FinTrack Pro is an advanced, progressive web app that helps you manage your finances seamlessly. With real‑time charts and detailed analytics, you can track your spending, income, and more across all devices.
+      </p>
+      <div class="feature-cards">
+        <div class="card">
+          <h3>PWA Capabilities</h3>
+          <p>Enjoy offline support and an installable experience.</p>
+        </div>
+        <div class="card">
+          <h3>Interactive Charts</h3>
+          <p>Visualize your financial data with beautiful, real‑time charts.</p>
+        </div>
+        <div class="card">
+          <h3>Data Management</h3>
+          <p>Import and export your transactions effortlessly.</p>
+        </div>
+      </div>
+    </section>
+    <section class="contact-form">
+      <h2>Contact Me</h2>
+      <form id="contactForm">
+        <div class="input-group">
+          <label for="contactEmail">Your Email</label>
+          <input type="email" id="contactEmail" required>
+        </div>
+        <div class="input-group">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send</button>
+      </form>
+    </section>
+  </main>
+  <footer class="container">
+    <p>&copy; 2024 FinTrack Pro. All rights reserved.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

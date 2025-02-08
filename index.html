@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinTrack Pro – Landing</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Include Chart.js and its date adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Apply dark mode immediately -->
+    <script>
+      if (localStorage.getItem("darkMode") === "true") {
+        document.documentElement.classList.add("dark-mode");
+        document.body.classList.add("dark-mode");
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="logo-container">
+            <a href="index.html" class="brand">
+              <span class="brand-icon">💰</span>
+              <span class="brand-text">FinTrack</span>
+            </a>
+          </div>
+          <div class="nav-right">
+            <ul class="nav-links">
+              <li><a href="index.html" class="nav-link">Home</a></li>
+              <li><a href="tracker.html" class="nav-link">Tracker</a></li>
+              <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <button id="darkModeToggle" class="theme-toggle">🌓</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="landing-main container">
+      <section class="hero">
+        <h1>Track Your Income &amp; Expenses Seamlessly</h1>
+        <p>Get your financial insights quickly with modern design and offline access.</p>
+        <img src="images/finance-dashboard.png" alt="Finance Dashboard" class="hero-image" />
+        <div class="chart-preview">
+          <canvas id="landingChart"></canvas>
+        </div>
+      </section>
+      <section class="features">
+        <h2>Key Features</h2>
+        <div class="feature-cards">
+          <div class="card">
+            <h3>Detailed Analytics</h3>
+            <p>Monitor total balance and view expense breakdown by category.</p>
+          </div>
+          <div class="card">
+            <h3>Data Export/Import</h3>
+            <p>Export transactions as CSV and charts as PNG easily.</p>
+          </div>
+          <div class="card">
+            <h3>Dark &amp; Light Mode</h3>
+            <p>Enjoy a modern theme with a toggle that persists across pages.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!--
+    <footer class="container">
+      <p>&copy; 2024 FinTrack Pro. All rights reserved.</p>
+    </footer>-->
+    <script src="script.js"></script>
+  </body>
+</html>
