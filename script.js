@@ -386,6 +386,32 @@ function importTransactionsFromCSV(csvData) {
             });
         }
     });
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const toggleBtn = document.getElementById("toggleMenu");
+    
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+      });
+    
+      // Handle menu navigation
+      document.querySelectorAll(".menu a").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const section = e.target.getAttribute("data-section");
+    
+          // Hide all sections and show the selected one
+          document.querySelectorAll(".content-section").forEach(sec => {
+            sec.style.display = "none";
+          });
+    
+          document.getElementById(section).style.display = "block";
+          sidebar.classList.remove("show"); // Close menu after selection
+        });
+      });
+    });
+    
 
     localStorage.setItem("transactions", JSON.stringify(transactions)); // ✅ Save to localStorage
     alert("CSV imported successfully!");

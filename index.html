@@ -39,6 +39,19 @@
         </div>
       </nav>
     </header>
+      <!-- Sidebar Menu -->
+  <aside class="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">✖</button>
+    <ul class="sidebar-links">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="tracker.html">📊 Tracker</a></li>
+      <li><a href="about.html">ℹ About</a></li>
+      <li><a href="settings.html">⚙ Settings</a></li>
+    </ul>
+  </aside>
+
+  <!-- Sidebar Toggle Button (for Mobile) -->
+  <button class="sidebar-toggle" onclick="toggleSidebar()"></button>
     <main class="landing-main container">
       <section class="hero">
         <h1>Track Your Income &amp; Expenses Seamlessly</h1>
@@ -66,6 +79,11 @@
         </div>
       </section>
     </main>
+    <script>
+      function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("open");
+      }
+    </script>
     <!--
     <footer class="container">
       <p>&copy; 2024 FinTrack Pro. All rights reserved.</p>
