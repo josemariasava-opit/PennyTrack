@@ -1,4 +1,4 @@
-/* Ayu-inspired Light Theme */
+/* Light Theme */
 :root {
   --bg-primary: #ffffff;
   --bg-secondary: #f5f7fa;
@@ -395,7 +395,7 @@ table.striped tr td button {
   display: none;
 }
 
-#importCSVButton, #exportCSV {
+#importCSVButton, #exportCSV, #saveTransaction{
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -409,8 +409,8 @@ table.striped tr td button {
   font-size: 0.9rem;
 }
 
-#importCSVButton:hover, #exportCSV:hover {
-  background-color: darken(var(--accent), 10%);
+#importCSVButton:hover, #exportCSV:hover, #saveTransaction:hover{
+  background-color: background-color;
 }
 
 /* Responsive Adjustments */
@@ -444,14 +444,22 @@ body.dark-mode input[type="date"] {
   border-color: var(--border);
 }
 
-/* 🔥 Fix for the Dropdown Calendar (Chrome/Safari) */
+/* Fix for the Dropdown Calendar (Chrome/Safari) */
 body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
   opacity: 0.8;
   cursor: pointer;
 }
 
-/* 📌 NEW: Fix Background of the Calendar in Dark Mode */
+/*Fix Background of the Calendar in Dark Mode */
 body.dark-mode {
   color-scheme: dark;
+}
+
+p {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
 }

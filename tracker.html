@@ -6,9 +6,6 @@
     <title>PennyTrack – Tracker</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
-    <!-- Include Chart.js for any additional charts if needed -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <!-- Include Highcharts for tracker charts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -91,7 +88,7 @@
           </section>
           <!-- Transactions Table -->
           <section class="transactions-section">
-            <h2 id="transactionsHeader">Transactions</h2>
+            <h2 id="transactionsHeader">Transactions List</h2>
             <div id="transactionsTable">
               <div class="import-export-container">
                 <input type="file" id="importCSV" accept=".csv" class="file-input" style="display: none";>
@@ -117,12 +114,12 @@
         <div class="right-panel">
           <section class="charts-section">
             <div class="chart-container" id="balanceChartContainer">
-              <h3>Total Balance Over Time</h3>
-              <div id="balanceChart" style="width:100%; height:300px;"></div>
+              <!--<h3>Total Balance Over Time</h3>-->
+              <div id="balanceChart" style="width:100%; height:400px;"></div>
             </div>
             <div class="chart-container" id="categoryChartContainer">
-              <h3>Expenses by Category</h3>
-              <div id="categoryChart" style="width:100%; height:300px;"></div>
+              <!--<h3>Expenses by Category</h3>-->
+              <div id="categoryChart" style="width:100%; height:400px;"></div>
             </div>
           </section>
         </div>

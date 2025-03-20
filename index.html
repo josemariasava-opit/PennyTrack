@@ -7,8 +7,7 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
     <!-- Include Chart.js and its date adapter -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <!-- Apply dark mode immediately -->
     <script>
       if (localStorage.getItem("darkMode") === "true") {
@@ -25,7 +24,7 @@
           <div class="logo-container">
             <a href="index.html" class="brand">
               <span class="brand-icon">💰</span>
-              <span class="brand-text">FinTrack</span>
+              <span class="brand-text">PennyTrack</span>
             </a>
           </div>
           <div class="nav-right">
@@ -43,9 +42,8 @@
       <section class="hero">
         <h1>Track Your Income &amp; Expenses Seamlessly</h1>
         <p>Get your financial insights quickly with modern design and offline access.</p>
-        <img src="images/finance-dashboard.png" alt="Finance Dashboard" class="hero-image" />
-        <div class="chart-preview">
-          <canvas id="landingChart"></canvas>
+        <div class="chart-container" id="landingChartContainer" >
+          <div id="landingChart" style="width:100%; height:400px;"></div>
         </div>
       </section>
       <section class="features">

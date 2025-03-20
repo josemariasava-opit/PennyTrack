@@ -1,6 +1,6 @@
 {
   "name": "PennyTrack",
-  "short_name": "FinTrack",
+  "short_name": "PennyTrack",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",

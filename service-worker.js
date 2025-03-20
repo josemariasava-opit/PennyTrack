@@ -1,4 +1,4 @@
-const CACHE_NAME = "fintrack-pro-v1";
+const CACHE_NAME = "PennyTrack";
 const ASSETS = [
   "/",
   "/index.html",
