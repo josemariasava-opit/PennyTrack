@@ -14,6 +14,7 @@
   </script>
 </head>
 <body>
+  <!-- Navbar -->
   <header class="modern-header">
     <nav class="navbar">
       <div class="nav-container">
@@ -29,70 +30,110 @@
             <li><a href="tracker.html" class="nav-link">Tracker</a></li>
             <li><a href="about.html" class="nav-link">About</a></li>
           </ul>
-          <button id="darkModeToggle" class="theme-toggle">🌓</button>
+          <button id="darkModeToggle" class="theme-toggle">🌙</button>
         </div>
       </div>
     </nav>
   </header>
+
+  <!-- Main Content -->
   <main class="about-main container">
     <section class="about-content">
       <h2>About PennyTrack</h2>
       <p style="text-align: center;">
         PennyTrack is an advanced Progressive Web App (PWA) designed for personal finance management. 
-        Developed as an assessment for my COMP-2002 web development course, taken at <a href="https://www.opit.com/" target="_blank" rel="noopener">OPIT</a>.
+        Developed as part of my COMP-2002 web development course at <a href="https://www.opit.com/" target="_blank" rel="noopener">OPIT</a>.
       </p>
-      <p>
 
-      </p>
+      <!-- Key Features -->
+      <h3>Key Features</h3>
       <div class="feature-cards">
         <div class="card">
-          <h3>🔐 Local Storage</h3>
+          <h4>🔒 Local Storage</h4>
           <p>All financial data is securely stored in your browser using localStorage, ensuring complete privacy.</p>
         </div>
         <div class="card">
-          <h3>📱 PWA Features</h3>
+          <h4>📱 PWA Features</h4>
           <p>Installable web app with offline support and native-like performance on any device.</p>
         </div>
         <div class="card">
-          <h3>📊 Dynamic Charts</h3>
+          <h4>📊 Dynamic Charts</h4>
           <p>Interactive visualizations powered by Highcharts for real-time financial charts.</p>
         </div>
       </div>
-        <div class="feature-cards">
+
+      <!-- Data Management -->
+      <h3>Data Management</h3>
+      <div class="feature-cards">
         <div class="card">
-          <h3>🎓 Academic Project</h3>
-          <p>Developed as part of my Computer Science degree assessment in web development.</p>
+          <h4>📥 Import/Export CSV</h4>
+          <p>Easily backup or migrate your data using CSV files. Transactions can be exported and imported seamlessly.</p>
         </div>
         <div class="card">
-          <h3>📥 Data Import/Export</h3>
-          <p>Easily backup or migrate your data using CSV file with Import/export functions.</p>
+          <h4>📅 Filtered Analytics</h4>
+          <p>Filter transactions by year and month to analyze your financial data dynamically.</p>
         </div>
         <div class="card">
-          <h3>🌍 Open Source</h3>
-          <p>Available on <a href="https://github.com/josemariasava-opit/PennyTrack" target="_blank" rel="noopener">GitHub</a> for transparency, version control and hosting.</p>
+          <h4>📝 Editable Transactions</h4>
+          <p>Edit or delete transactions directly from the table for accurate record-keeping.</p>
         </div>
       </div>
 
-      <!--<h2>Technical Implementation</h2>-->
+      <!-- Technical Implementation -->
+      <h3>Technical Implementation</h3>
       <div class="feature-cards">
         <div class="card">
-          <h3>🛠️ Vanilla JS</h3>
-          <p>Built with pure JavaScript without frameworks for optimal performance.</p>
+          <h4>🛠️ Vanilla JavaScript</h4>
+          <p>Built with pure JavaScript without frameworks for optimal performance and lightweight execution.</p>
         </div>
         <div class="card">
-          <h3>🌓 Theme System</h3>
+          <h4>🌓 Dark/Light Mode</h4>
           <p>Custom dark/light mode with localStorage persistence for user preferences.</p>
         </div>
         <div class="card">
-          <h3>📲 Responsive Design</h3>
+          <h4>📲 Responsive Design</h4>
           <p>Fully responsive layout that adapts to mobile, tablet, and desktop screens.</p>
         </div>
       </div>
+
+      <!-- Open Source & Academic Context -->
+      <h3>Open Source & Academic Context</h3>
+      <div class="feature-cards">
+        <div class="card">
+          <h4>🎓 Academic Project</h4>
+          <p>Developed as part of my Computer Science degree assessment in web development.</p>
+        </div>
+        <div class="card">
+          <h4>🌍 Open Source</h4>
+          <p>Available on <a href="https://github.com/josemariasava-opit/PennyTrack" target="_blank" rel="noopener">GitHub</a> for transparency, version control, and hosting.</p>
+        </div>
+        <div class="card">
+          <h4>⚙️ Service Worker</h4>
+          <p>Service worker registration ensures offline functionality and improved performance.</p>
+        </div>
+      </div>
+
+      <!-- Contributing to PennyTrack -->
+      <h3>Contributing to PennyTrack</h3>
+      <p style="text-align: center;">
+        We welcome contributions from the community! If you'd like to contribute to PennyTrack, follow these steps:
+      </p>
+      <ol class="centered-list">
+        <li>Fork the repository on GitHub: <a href="https://github.com/josemariasava-opit/PennyTrack" target="_blank" rel="noopener">PennyTrack GitHub Repository</a>.</li>
+        <li>Create a new branch for your feature or bug fix.</li>
+        <li>Submit a pull request with a detailed description of your changes.</li>
+      </ol>
+      <p style="text-align: center;">
+        Please ensure your code follows the project's coding standards and includes appropriate documentation.
+      </p>
     </section>
   </main>
-  <!--<footer class="container">
+
+  <!-- Footer -->
+  <footer class="container">
     <p>&copy; 2024 PennyTrack. Academic project developed for Computer Science degree assessment.</p>
-  </footer>-->
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

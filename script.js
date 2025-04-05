@@ -446,6 +446,45 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   
+    // Smooth Scrolling for Navigation Links
+    document.querySelectorAll('.nav-link').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href'); // Get the href attribute
+
+        // Check if the link is for smooth scrolling (starts with '#')
+        if (href.startsWith('#')) {
+          e.preventDefault(); // Prevent default behavior only for internal links
+          const targetId = href.substring(1); // Remove the '#' to get the target ID
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the target
+          }
+        }
+        // For external links (e.g., 'index.html', 'tracker.html'), do nothing
+        // The browser will handle navigation automatically
+      });
+    });
+    // Contact Form Validation
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) {
+          alert('Please fill out all fields.');
+          return;
+        }
+
+        // Simulate form submission
+        alert('Thank you for your message!');
+        contactForm.reset();
+      });
+    }
+  
     function updateTransactionTable() {
       renderTransactions();
       updateDashboard();

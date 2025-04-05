@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PennyTrack – Landing</title>
-    <link rel="manifest" href="manifest.json" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PennyTrack - Your Personal Finance Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css" />
     <!-- Include Chart.js and its date adapter -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -15,59 +16,105 @@
         document.body.classList.add("dark-mode");
       }
     </script>
-  </head>
-  <body>
-    <!-- Modern Header -->
-    <header class="modern-header">
-      <nav class="navbar">
-        <div class="nav-container">
-          <div class="logo-container">
-            <a href="index.html" class="brand">
-              <span class="brand-icon">💰</span>
-              <span class="brand-text">PennyTrack</span>
-            </a>
-          </div>
-          <div class="nav-right">
-            <ul class="nav-links">
-              <li><a href="index.html" class="nav-link">Home</a></li>
-              <li><a href="tracker.html" class="nav-link">Tracker</a></li>
-              <li><a href="about.html" class="nav-link">About</a></li>
-            </ul>
-            <button id="darkModeToggle" class="theme-toggle">🌓</button>
-          </div>
-        </div>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="modern-header">
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <span class="brand-icon">💰</span>
+        <span>PennyTrack</span>
+      </a>
+      <nav class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li> <!-- New Link -->
+        </ul>
+        <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
       </nav>
-    </header>
-    <main class="landing-main container">
-      <section class="hero">
-        <h1>Track Your Income &amp; Expenses Seamlessly</h1>
-        <p>Get your financial insights quickly with modern design and offline access.</p>
-        <div class="chart-container" id="landingChartContainer" >
-          <div id="landingChart" style="width:100%; height:400px;"></div>
-        </div>
-      </section>
-      <section class="features">
-        <h2>Key Features</h2>
-        <div class="feature-cards">
-          <div class="card">
-            <h3>Detailed Analytics</h3>
-            <p>Monitor total balance and view expense breakdown by category.</p>
-          </div>
-          <div class="card">
-            <h3>Data Export/Import</h3>
-            <p>Export transactions as CSV and charts as PNG easily.</p>
-          </div>
-          <div class="card">
-            <h3>Dark &amp; Light Mode</h3>
-            <p>Enjoy a modern theme with a toggle that persists across pages.</p>
-          </div>
-        </div>
-      </section>
-    </main>
-    <!--
-    <footer class="container">
-      <p>&copy; 2024 PennyTrack. All rights reserved.</p>
-    </footer>-->
-    <script src="script.js"></script>
-  </body>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Track Your Finances with PennyTrack</h1>
+      <p>Easily manage your income, expenses, and savings with our intuitive finance tracker.</p>
+      <div class="chart-container" id="landingChartContainer" >
+        <div id="landingChart" style="width:100%; height:400px;"></div>
+      </div>
+      <div class="cta-buttons">
+        <a href="tracker.html" class="btn">Get Started</a>
+        <a href="about.html" class="btn secondary-btn">About</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <h2>Why Choose PennyTrack?</h2>
+    <div class="feature-cards">
+      <div class="card">
+        <h3>Simple Interface</h3>
+        <p>Our user-friendly design makes tracking finances effortless.</p>
+      </div>
+      <div class="card">
+        <h3>Real-Time Tracking</h3>
+        <p>Monitor your income and expenses in real-time with dynamic charts.</p>
+      </div>
+      <div class="card">
+        <h3>Detailed Analytics</h3>
+        <p>Monitor total balance and view expense breakdown by category.</p>
+      </div>
+      <div class="card">
+        <h3>Data Security</h3>
+        <p>Your financial data is stored securely with localstorage in your browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-grid">
+      <blockquote>
+        "PennyTrack has transformed how I manage my finances. Highly recommend!"
+        <footer>- Jane Doe</footer>
+      </blockquote>
+      <blockquote>
+        "The best personal finance app I've used. Simple yet powerful."
+        <footer>- John Smith</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <form class="form-container" id="contactForm">
+      <div class="input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="input-group">
+        <label for="message">Message</label>
+        <textarea id="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 PennyTrack. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>

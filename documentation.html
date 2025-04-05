@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PennyTrack - Documentation</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Apply dark mode immediately -->
+  <script>
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("dark-mode");
+      document.body.classList.add("dark-mode");
+    }
+  </script>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="modern-header">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo-container">
+          <a href="index.html" class="brand">
+            <span class="brand-icon">💰</span>
+            <span class="brand-text">PennyTrack</span>
+          </a>
+        </div>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="tracker.html" class="nav-link">Tracker</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+          </ul>
+          <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="landing-main container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>PennyTrack Documentation</h1>
+      <p>Everything you need to know about using and contributing to PennyTrack.</p>
+    </section>
+
+    <!-- About PennyTrack -->
+    <section class="features">
+      <h2>About PennyTrack</h2>
+      <p class="centered-text">
+        PennyTrack is a personal expense management application designed to help users track their income and expenses effectively. 
+        With an intuitive user interface, PennyTrack enables users to monitor their financial health and make informed decisions about their spending habits.
+      </p>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="features">
+      <h2>Getting Started</h2>
+      <p class="centered-text">
+        To get started with PennyTrack, simply navigate to the <a href="tracker.html" class="accent-link">Tracker</a> page and begin adding your transactions. 
+        You can categorize your income and expenses, view real-time analytics, and export your data for further analysis.
+      </p>
+    </section>
+
+    <!-- Setup Instructions -->
+    <section class="features">
+      <h2>Setup Instructions</h2>
+      <p class="centered-text">
+        PennyTrack is a Progressive Web App (PWA) that works offline. To install it on your device:
+      </p>
+      <ol class="centered-list">
+        <li>Visit the live demo link: <a href="https://josemariasava-opit.github.io/PennyTrack/about.html" target="_blank" class="accent-link">Live Demo</a>.</li>
+        <li>On mobile devices, tap the "Add to Home Screen" option from your browser's menu.</li>
+        <li>On desktop, you can bookmark the page for quick access.</li>
+      </ol>
+    </section>
+
+    <!-- Key Features -->
+    <section class="features">
+      <h2>Key Features</h2>
+      <div class="feature-cards">
+        <div class="card">
+          <h3>Expense Tracking</h3>
+          <p>Add, edit, and delete expenses to keep an accurate record of your spending.</p>
+        </div>
+        <div class="card">
+          <h3>Income Tracking</h3>
+          <p>Record various income sources to monitor your earnings.</p>
+        </div>
+        <div class="card">
+          <h3>Categorization</h3>
+          <p>Organize transactions into categories for better analysis.</p>
+        </div>
+        <div class="card">
+          <h3>Financial Insights</h3>
+          <p>Gain insights into your spending patterns to make informed financial decisions.</p>
+        </div>
+        <div class="card">
+          <h3>LocalStorage Support</h3>
+          <p>All user data is stored in the browser's LocalStorage, ensuring persistence between sessions without requiring a backend.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies Used -->
+    <section class="features">
+      <h2>Technologies Used</h2>
+      <ul class="centered-list">
+        <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+        <li><strong>Charts:</strong> Highcharts.js for dynamic data visualization</li>
+        <li><strong>Storage:</strong> LocalStorage (no backend required)</li>
+        <li><strong>Offline Support:</strong> Service Worker for Progressive Web App (PWA) capabilities</li>
+      </ul>
+    </section>
+
+    <!-- FAQs -->
+    <section class="features">
+      <h2>Frequently Asked Questions (FAQs)</h2>
+      <p class="centered-text">
+        <strong>Q: How do I export my transactions?</strong><br>
+        A: Navigate to the Tracker page and click the "Export CSV" button to download your transactions as a CSV file.
+      </p>
+      <p class="centered-text">
+        <strong>Q: Can I import transactions from a CSV file?</strong><br>
+        A: Yes! Use the "Import CSV" feature on the Tracker page to upload your transactions.
+      </p>
+      <p class="centered-text">
+        <strong>Q: Is my data secure?</strong><br>
+        A: Your data is stored locally in your browser using LocalStorage. It is not shared with any external servers.
+      </p>
+    </section>
+
+    <!-- Contributing Guidelines -->
+    <section class="features">
+      <h2>Contributing Guidelines</h2>
+      <p class="centered-text">
+        We welcome contributions from the community! If you'd like to contribute to PennyTrack:
+      </p>
+      <ol class="centered-list">
+        <li>Fork the repository on GitHub.</li>
+        <li>Create a new branch for your feature or bug fix.</li>
+        <li>Submit a pull request with a detailed description of your changes.</li>
+      </ol>
+      <p class="centered-text">
+        Please ensure your code follows the project's coding standards and includes appropriate documentation.
+      </p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container">
+    <p>&copy; 2024 PennyTrack. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

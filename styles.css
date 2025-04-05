@@ -169,12 +169,39 @@ h1,h2,h3{
   justify-content: center;
   margin-top: 1rem;
 }
+
+/* Feature List Styling */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.feature-list li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .card {
   background: var(--card-bg);
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 4px 4px 4px rgba(0,0,0,0.1);
-  width: 280px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.card h4 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 /* Forms */
@@ -214,7 +241,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* Buttons */
-.btn {
+.btn{
   background-color: var(--accent);
   color: #fff;
   padding: 0.6rem 1rem;
@@ -222,9 +249,14 @@ input:focus, select:focus, textarea:focus {
   border-radius: 6px;
   cursor: pointer;
   margin: 0.3rem;
+  outline: none;
+  transition: opacity 0.3s;
 }
 .btn:hover {
   opacity: 0.9;
+}
+.btn:focus {
+  outline: 2px solid var(--accent);
 }
 
 /* Tables */
@@ -280,8 +312,9 @@ table.striped tr td button {
   margin-bottom: 2rem;
   background: var(--chart-bg);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 4px 4px 4px rgba(0,0,0,0.1);
+  padding: 1rem;
 }
 
 /* Export Chart Button */
@@ -424,6 +457,31 @@ table.striped tr td button {
   }
 }
 
+/* Responsive Chart */
+@media (max-width: 768px) {
+  .chart-container {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .feature-cards {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
 /* Apply Theme to Input */
 input[type="date"] {
   appearance: none;
@@ -465,4 +523,63 @@ p {
 
 h3 {
   text-align: center;
+}
+
+/* Improved Testimonials Layout */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Footer Styling */
+footer {
+  background-color: var(--bg-primary);
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+.secondary-btn {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--accent);
+}
+
+.secondary-btn:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* Center-Aligned Text */
+.centered-text {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 1rem auto;
+  max-width: 800px;
+}
+
+/* Center-Aligned Lists */
+.centered-list {
+  text-align: center;
+  list-style-position: inside;
+  padding: 0;
+  margin: 1rem auto;
+  max-width: 800px;
+}
+
+.centered-list li {
+  margin: 0.5rem 0;
+}
+
+/* Accent Link Styling */
+.accent-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.accent-link:hover {
+  text-decoration: underline;
 }
