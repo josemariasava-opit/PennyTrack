@@ -35,7 +35,7 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-h1,h2{
+h1,h2,h3{
   text-align: center;
 }
 
@@ -45,11 +45,15 @@ h1,h2{
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   padding: 0.5rem;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .nav-container {
   max-width: 1200px;
   margin: auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -180,7 +184,7 @@ h1,h2{
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  max-width: 1000px; /* Adjust this if necessary */
+  max-width: 1000px; 
   margin: auto;
 }
 
@@ -270,7 +274,6 @@ table.striped tr td button {
   }
 }
 
-
 /* Chart Container */
 .chart-container {
   position: relative;
@@ -304,7 +307,7 @@ table.striped tr td button {
 .modern-header {
   background-color: var(--bg-primary);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: sticky;
+  position: static;
   top: 0;
   z-index: 1000;
 }

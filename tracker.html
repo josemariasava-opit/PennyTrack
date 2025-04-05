@@ -25,7 +25,7 @@
           <div class="logo-container">
             <a href="index.html" class="brand">
               <span class="brand-icon">💰</span>
-              <span class="brand-text">FinTrack</span>
+              <span class="brand-text">PennyTrack</span>
             </a>
           </div>
           <div class="nav-right">
@@ -34,7 +34,7 @@
               <li><a href="tracker.html" class="nav-link">Tracker</a></li>
               <li><a href="about.html" class="nav-link">About</a></li>
             </ul>
-            <button id="darkModeToggle" class="theme-toggle">🌓</button>
+            <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
           </div>
         </div>
       </nav>
@@ -88,7 +88,7 @@
           </section>
           <!-- Transactions Table -->
           <section class="transactions-section">
-            <h2 id="transactionsHeader">Transactions List</h2>
+            <h2 id="transactionsHeader" tabindex="0" aria-expanded="false">Transactions List</h2>
             <div id="transactionsTable">
               <div class="import-export-container">
                 <input type="file" id="importCSV" accept=".csv" class="file-input" style="display: none";>
