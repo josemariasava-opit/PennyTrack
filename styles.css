@@ -432,6 +432,7 @@ table.striped tr td button {
   display: none;
 }
 
+/*
 #importCSVButton, #exportCSV, #saveTransaction{
   display: flex;
   align-items: center;
@@ -449,12 +450,20 @@ table.striped tr td button {
 #importCSVButton:hover, #exportCSV:hover, #saveTransaction:hover{
   background-color: background-color;
 }
-
+*/
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .import-export-container {
     flex-direction: column;
     gap: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #transactionsTable {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 }
 
@@ -538,8 +547,8 @@ h3 {
 footer {
   background-color: var(--bg-primary);
   text-align: center;
-  padding: 1rem 0;
-  margin-top: 2rem;
+  padding: 0.5rem 0;
+  margin-top: 1rem;
 }
 
 .secondary-btn {
@@ -583,4 +592,40 @@ footer {
 
 .accent-link:hover {
   text-decoration: underline;
+}
+
+/* Larger CTA Button Styling */
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem; 
+  font-size: 1.25rem; 
+  font-weight: bold; 
+  background-color: var(--bg-secondary); 
+  color: var(--text-primary);
+  border: 1px solid var(--accent);
+  border-radius: 8px; 
+  cursor: pointer;
+  margin: 0.3rem;
+  outline: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  text-decoration: none; 
+  text-align: center;
+}
+
+.cta-button:hover {
+  transform: scale(1.05); 
+  background-color: var(--accent);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  color: #fff;
+}
+
+.cta-button:active {
+  transform: scale(0.98); 
+}
+
+@media (max-width: 768px) {
+  .cta-button {
+    font-size: 1rem; 
+    padding: 0.8rem 1.5rem; 
+  }
 }

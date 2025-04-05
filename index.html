@@ -30,7 +30,7 @@
           <li><a href="#features" class="nav-link">Features</a></li>
           <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li> <!-- New Link -->
+          <li><a href="about.html" class="nav-link">About</a></li> 
         </ul>
         <button id="darkModeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌓</button>
       </nav>
@@ -45,10 +45,8 @@
       <div class="chart-container" id="landingChartContainer" >
         <div id="landingChart" style="width:100%; height:400px;"></div>
       </div>
-      <div class="cta-buttons">
-        <a href="tracker.html" class="btn">Get Started</a>
-        <a href="about.html" class="btn secondary-btn">About</a>
-      </div>
+        <a href="tracker.html" class="cta-button ">Get Started</a>
+        <a href="about.html" class="cta-button ">About</a>
     </div>
   </section>
 
@@ -81,11 +79,11 @@
     <div class="testimonial-grid">
       <blockquote>
         "PennyTrack has transformed how I manage my finances. Highly recommend!"
-        <footer>- Jane Doe</footer>
+        <footer>- Peter</footer>
       </blockquote>
       <blockquote>
         "The best personal finance app I've used. Simple yet powerful."
-        <footer>- John Smith</footer>
+        <footer>- John</footer>
       </blockquote>
     </div>
   </section>
@@ -96,15 +94,15 @@
     <form id="contactForm" class="form-container" action="https://formspree.io/f/xzzejlja" method="POST">
       <div class="input-group">
         <label for="name">Name</label>
-        <input type="text" id="name" required>
+        <input type="text" name="name" id="name" required>
       </div>
       <div class="input-group">
         <label for="email">Email</label>
-        <input type="email" id="email" required>
+        <input type="email" name="email" id="email" required>
       </div>
       <div class="input-group">
         <label for="message">Message</label>
-        <textarea id="message" rows="4" required></textarea>
+        <textarea id="message" name="message" rows="4" required></textarea>
       </div>
       <button type="submit" class="btn">Send Message</button>
     </form>
@@ -112,7 +110,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2023 PennyTrack. All rights reserved.</p>
+    <p>&copy; 2025 PennyTrack</p>
   </footer>
 
   <script src="script.js"></script>

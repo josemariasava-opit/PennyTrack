@@ -1,300 +1,325 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // DARK MODE TOGGLE
-    const darkToggle = document.getElementById("darkModeToggle");
-    
-    // Chart variables declared at the right scope level
-    let balanceChart; // Highcharts instance for the balance graph
-    let expenseChart; // Highcharts instance for the expense chart
-    let landingChart; // Highcharts instance for the landing page chart
-    
-    // Check localStorage for dark mode preference on page load
-    if (localStorage.getItem("darkMode") === "true") {
-      document.documentElement.classList.add("dark-mode");
-      document.body.classList.add("dark-mode");
+  // DARK MODE TOGGLE
+  const darkToggle = document.getElementById("darkModeToggle");
+  // Chart variables declared at the right scope level
+  let balanceChart; // Highcharts instance for the balance graph
+  let expenseChart; // Highcharts instance for the expense chart
+  let landingChart; // Highcharts instance for the landing page chart
+
+  // Check localStorage for dark mode preference on page load
+  if (localStorage.getItem("darkMode") === "true") {
+    document.documentElement.classList.add("dark-mode");
+    document.body.classList.add("dark-mode");
+  }
+
+  // Add event listener to toggle dark mode
+  if (darkToggle) {
+    darkToggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.documentElement.classList.toggle("dark-mode");
+      document.body.classList.toggle("dark-mode");
+
+      // Update all chart themes
+      if (balanceChart) updateChartTheme(balanceChart);
+      if (expenseChart) updateChartTheme(expenseChart);
+      if (landingChart) updateChartTheme(landingChart);
+
+      // Save preference in localStorage
+      localStorage.setItem(
+        "darkMode",
+        document.documentElement.classList.contains("dark-mode")
+      );
+    });
+  }
+
+  // Export all transactions from localStorage as a CSV file
+  function exportTransactionsCSV() {
+    // Retrieve transactions (or an empty array if none exist)
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    if (!transactions.length) {
+      alert("No transactions to export.");
+      return;
     }
-    
-    // Add event listener to toggle dark mode
-    if (darkToggle) {
-      darkToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        document.documentElement.classList.toggle("dark-mode");
-        document.body.classList.toggle("dark-mode");
-        
-        // Update all chart themes
-        if (balanceChart) updateChartTheme(balanceChart);
-        if (expenseChart) updateChartTheme(expenseChart);
-        if (landingChart) updateChartTheme(landingChart);
-        
-        // Save preference in localStorage
-        localStorage.setItem(
-          "darkMode",
-          document.documentElement.classList.contains("dark-mode")
-        );
-      });
-    }
-  
-    // Export all transactions from localStorage as a CSV file
-    function exportTransactionsCSV() {
-      // Retrieve transactions (or an empty array if none exist)
-      const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-      if (!transactions.length) {
-        alert("No transactions to export.");
-        return;
-      }
-  
-      // Create header row and join all rows with newlines
-      const header = ["Date", "Type", "Category", "Amount"].join(",");
-      const rows = transactions.map(tx => `${tx.date},${tx.type},${tx.category},${tx.amount}`);
-      const csvContent = "data:text/csv;charset=utf-8," + [header, ...rows].join("\n");
-  
-      // Create a temporary link element and trigger the download
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `transactions_${Date.now()}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    
-    function importTransactionsFromCSV(csvData) {
-      const rows = csvData.split("\n").slice(1); // Skip header row
-      let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-  
-      rows.forEach(row => {
-        if (!row.trim()) return; // Skip empty lines
-  
-        const [date, type, category, amount] = row.split(",");
-        if (date && type && category && amount) {
-          transactions.push({
-            date: date.trim(),
-            type: type.trim(),
-            category: category.trim(),
-            amount: parseFloat(amount.trim())
-          });
-        }
-      });
-  
-      localStorage.setItem("transactions", JSON.stringify(transactions));
-      alert("Transactions imported successfully!");
-      loadTransactions(); // Refresh the table
-    }
-  
-    // ThemeColors
-    const graphColors = {
-      income: "#6CBF43", // Green for income
-      expense: "#E65050", // Red for expenses
-      lightBackground: "#FFFFFF",
-      darkBackground: "#1A202C",
-      lightText: "#000000",
-      darkText: "#F8F8F2",
-      palette: ["#FA8D3E", "#F07171", "#695380", "#FFCC66", "#3B414A"]
-    };
-  
-    // SERVICE WORKER REGISTRATION
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js")
-        .then((reg) => console.log("Service Worker Registered:", reg))
-        .catch((err) => console.error("Service Worker Registration Failed:", err));
-    }
-  
-    // LANDING PAGE CHART
-    const landingChartEl = document.getElementById("landingChart");
-    if (landingChartEl) {
-      landingChart = Highcharts.chart("landingChart", {
-        chart: { type: "column" },
-        title: { text: "Income vs Expenses" },
-        xAxis: {
-          categories: ["Income", "Expenses"],
-          crosshair: true,
-        },
-        yAxis: {
-          title: { text: "Amount ($)" },
-          min: 0,
-        },
-        legend: {
-          layout: "horizontal",
-          align: "center",
-          verticalAlign: "top",
-          x: 0,
-          y: 20,
-        },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0,
-            stacking: null,
-          },
-        },
-        series: [
-          { name: "Income", data: [5000], color: "#6CBF43" },
-          { name: "Expenses", data: [3000], color: "#E65050" },
-        ],
-      });
-  
-      // Apply theme
-      updateChartTheme(landingChart);
-    }
-  
-    // Retrieve transactions from localStorage or initialize as empty array
+
+    // Create header row and join all rows with newlines
+    const header = ["Date", "Type", "Category", "Amount"].join(",");
+    const rows = transactions.map(
+      (tx) => `${tx.date},${tx.type},${tx.category},${tx.amount}`
+    );
+    const csvContent = "data:text/csv;charset=utf-8," + [header, ...rows].join("\n");
+
+    // Create a temporary link element and trigger the download
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `transactions_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function importTransactionsFromCSV(csvData) {
+    const rows = csvData.split("\n").slice(1); // Skip header row
     let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-    let editingIndex = null;
-  
-    // Save transactions to localStorage
-    function saveTransactions() {
-      localStorage.setItem("transactions", JSON.stringify(transactions));
-    }
-  
-    // Render transactions in the table
-    function renderTransactions() {
-      const tbody = document.getElementById("transactionsBody");
-      if (!tbody) return; // Guard clause if not on the tracker page
-      
-      tbody.innerHTML = "";
-      transactions.forEach((tx, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${new Date(tx.date).toLocaleDateString()}</td>
-          <td style="color:${tx.type === "income" ? graphColors.income : graphColors.expense};">${tx.type}</td>
-          <td>${tx.category}</td>
-          <td>${parseFloat(tx.amount).toFixed(2)}</td>
-          <td>
-            <button class="edit-btn" data-index="${index}">Edit</button>
-            <button class="delete-btn" data-index="${index}">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(row);
-      });
-  
-      // Attach event listeners for edit and delete buttons
-      document.querySelectorAll(".edit-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const idx = e.target.getAttribute("data-index");
-          populateFormForEdit(idx);
+    rows.forEach((row) => {
+      if (!row.trim()) return; // Skip empty lines
+      const [date, type, category, amount] = row.split(",");
+      if (date && type && category && amount) {
+        transactions.push({
+          date: date.trim(),
+          type: type.trim(),
+          category: category.trim(),
+          amount: parseFloat(amount.trim()),
         });
+      }
+    });
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+    alert("Transactions imported successfully!");
+    loadTransactions(); // Refresh the table
+  }
+
+  // ThemeColors
+  const graphColors = {
+    income: "#6CBF43", // Green for income
+    expense: "#E65050", // Red for expenses
+    lightBackground: "#FFFFFF",
+    darkBackground: "#1A202C",
+    lightText: "#000000",
+    darkText: "#F8F8F2",
+    palette: ["#FA8D3E", "#F07171", "#695380", "#FFCC66", "#3B414A"],
+  };
+
+  // SERVICE WORKER REGISTRATION
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => console.log("Service Worker Registered:", reg))
+      .catch((err) => console.error("Service Worker Registration Failed:", err));
+  }
+
+  // LANDING PAGE CHART
+  const landingChartEl = document.getElementById("landingChart");
+  if (landingChartEl) {
+    landingChart = Highcharts.chart("landingChart", {
+      chart: { type: "column" },
+      title: { text: "Income vs Expenses" },
+      xAxis: {
+        categories: ["Income", "Expenses"],
+        crosshair: true,
+      },
+      yAxis: {
+        title: { text: "Amount ($)" },
+        min: 0,
+      },
+      legend: {
+        layout: "horizontal",
+        align: "center",
+        verticalAlign: "top",
+        x: 0,
+        y: 20,
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0,
+          stacking: null,
+        },
+      },
+      series: [
+        { name: "Income", data: [5000], color: "#6CBF43" },
+        { name: "Expenses", data: [3000], color: "#E65050" },
+      ],
+    });
+    // Apply theme
+    updateChartTheme(landingChart);
+  }
+
+  // Retrieve transactions from localStorage or initialize as empty array
+  let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+  let editingIndex = null;
+
+  // Save transactions to localStorage
+  function saveTransactions() {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }
+
+  // Render transactions in the table
+  function renderTransactions() {
+    const tbody = document.getElementById("transactionsBody");
+    if (!tbody) return; // Guard clause if not on the tracker page
+    tbody.innerHTML = "";
+    transactions.forEach((tx, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${new Date(tx.date).toLocaleDateString()}</td>
+        <td style="color:${tx.type === "income" ? graphColors.income : graphColors.expense};">${tx.type}</td>
+        <td>${tx.category}</td>
+        <td>${parseFloat(tx.amount).toFixed(2)}</td>
+        <td>
+          <button class="edit-btn" data-index="${index}">Edit</button>
+          <button class="delete-btn" data-index="${index}">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    // Attach event listeners for edit and delete buttons
+    document.querySelectorAll(".edit-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const idx = e.target.getAttribute("data-index");
+        populateFormForEdit(idx);
       });
-      document.querySelectorAll(".delete-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const idx = e.target.getAttribute("data-index");
-          deleteTransaction(idx);
-        });
+    });
+
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const idx = e.target.getAttribute("data-index");
+        deleteTransaction(idx);
       });
+    });
+  }
+
+  function populateFormForEdit(index) {
+    const tx = transactions[index];
+    const dateEl = document.getElementById("date");
+    const typeEl = document.getElementById("type");
+    const categoryEl = document.getElementById("category");
+    const amountEl = document.getElementById("amount");
+    const saveTransactionBtn = document.getElementById("saveTransaction");
+    const cancelEditBtn = document.getElementById("cancelEdit");
+
+    if (
+      dateEl &&
+      typeEl &&
+      categoryEl &&
+      amountEl &&
+      saveTransactionBtn &&
+      cancelEditBtn
+    ) {
+      dateEl.value = tx.date;
+      typeEl.value = tx.type;
+      categoryEl.value = tx.category;
+      amountEl.value = tx.amount;
+      editingIndex = index;
+      saveTransactionBtn.innerText = "Update Transaction";
+      cancelEditBtn.style.display = "inline-block";
     }
+  }
+
+  function deleteTransaction(index) {
+    transactions.splice(index, 1);
+    saveTransactions();
+    renderTransactions();
+    updateDashboard();
+  }
+
+  // Dashboard update:
+  // – Filter transactions by year and month from filter inputs.
+  // – Update balance graph and expense chart based on filtered data.
+  function updateDashboard() {
+    const filterYearEl = document.getElementById("filterYear");
+    const filterMonthEl = document.getElementById("filterMonth");
+    if (!filterYearEl || !filterMonthEl) return; // Not on tracker page
   
-    function populateFormForEdit(index) {
-      const tx = transactions[index];
-      const dateEl = document.getElementById("date");
-      const typeEl = document.getElementById("type");
-      const categoryEl = document.getElementById("category");
-      const amountEl = document.getElementById("amount");
-      const saveTransactionBtn = document.getElementById("saveTransaction");
-      const cancelEditBtn = document.getElementById("cancelEdit");
-      
-      if (dateEl && typeEl && categoryEl && amountEl && saveTransactionBtn && cancelEditBtn) {
-        dateEl.value = tx.date;
-        typeEl.value = tx.type;
-        categoryEl.value = tx.category;
-        amountEl.value = tx.amount;
-        editingIndex = index;
-        saveTransactionBtn.innerText = "Update Transaction";
-        cancelEditBtn.style.display = "inline-block";
+    const filterYear = filterYearEl.value;
+    const filterMonth = filterMonthEl.value;
+  
+    let filteredTx = transactions.filter((tx) => {
+      const txDate = new Date(tx.date);
+      let valid = true;
+      if (filterYear) valid = valid && txDate.getFullYear() === parseInt(filterYear);
+      if (filterMonth)
+        valid = valid && txDate.getMonth() + 1 === parseInt(filterMonth);
+      return valid;
+    });
+
+      /// Group transactions by month
+    let monthlyData = {};
+    filteredTx.forEach((tx) => {
+      const dateKey = `${new Date(tx.date).getFullYear()}-${String(
+        new Date(tx.date).getMonth() + 1
+      ).padStart(2, "0")}`; // Format: YYYY-MM
+      if (!monthlyData[dateKey]) monthlyData[dateKey] = { income: 0, expense: 0 };
+      if (tx.type === "income") monthlyData[dateKey].income += parseFloat(tx.amount);
+      else monthlyData[dateKey].expense += parseFloat(tx.amount);
+    });
+
+      // Sort months chronologically
+    const sortedMonths = Object.keys(monthlyData).sort();
+
+    // Prepare income and expense data for the chart
+    const incomeData = sortedMonths.map((month) => monthlyData[month].income);
+    const expenseData = sortedMonths.map((month) => monthlyData[month].expense);
+
+
+    // Update or create the balance graph
+    const balanceChartEl = document.getElementById("balanceChart");
+    if (balanceChartEl) {
+      if (balanceChart) {
+        balanceChart.series[0].setData(incomeData, true); // Update income data
+        balanceChart.series[1].setData(expenseData, true); // Update expense data
+        balanceChart.xAxis[0].setCategories(sortedMonths, true); // Update categories
+        updateChartTheme(balanceChart); // Apply theme changes
+      } else {
+        balanceChart = Highcharts.chart("balanceChart", {
+          chart: { type: "column" },
+          title: { text: "Monthly Income vs Expenses" },
+          xAxis: {
+            categories: sortedMonths, // Months as categories
+            title: { text: "Month" },
+          },
+          yAxis: {
+            title: { text: "Amount ($)" },
+            min: 0,
+          },
+          plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0,
+            },
+          },
+          series: [
+            {
+              name: "Income",
+              data: incomeData, // Income totals for each month
+              color: graphColors.income,
+            },
+            {
+              name: "Expenses",
+              data: expenseData, // Expense totals for each month
+              color: graphColors.expense,
+            },
+          ],
+        });
+        updateChartTheme(balanceChart); // Apply theme changes
       }
     }
   
-    function deleteTransaction(index) {
-      transactions.splice(index, 1);
-      saveTransactions();
-      renderTransactions();
-      updateDashboard();
-    }
-  
-    // Dashboard update:
-    // – Filter transactions by year and month from filter inputs.
-    // – Update balance graph and expense chart based on filtered data.
-    function updateDashboard() {
-      const filterYearEl = document.getElementById("filterYear");
-      const filterMonthEl = document.getElementById("filterMonth");
-      
-      if (!filterYearEl || !filterMonthEl) return; // Not on tracker page
-      
-      const filterYear = filterYearEl.value;
-      const filterMonth = filterMonthEl.value;
-  
-      let filteredTx = transactions.filter((tx) => {
-        const txDate = new Date(tx.date);
-        let valid = true;
-        if (filterYear) valid = valid && txDate.getFullYear() === parseInt(filterYear);
-        if (filterMonth) valid = valid && txDate.getMonth() + 1 === parseInt(filterMonth);
-        return valid;
-      });
-  
-      // Calculate income and expense totals by date for balance graph
-      let balanceData = {};
-      filteredTx.forEach((tx) => {
-        const dateKey = new Date(tx.date).toISOString().split('T')[0]; // Format: YYYY-MM-DD
-        if (!balanceData[dateKey]) balanceData[dateKey] = { income: 0, expense: 0 };
-        if (tx.type === "income") balanceData[dateKey].income += parseFloat(tx.amount);
-        else balanceData[dateKey].expense += parseFloat(tx.amount);
-      });
-  
-      const dates = Object.keys(balanceData).sort();
-      const incomeData = dates.map((date) => balanceData[date].income);
-      const expenseData = dates.map((date) => balanceData[date].expense);
-  
-      // Update or create the balance graph
-      const balanceChartEl = document.getElementById('balanceChart');
-      if (balanceChartEl) {
-        if (balanceChart) {
-          balanceChart.series[0].setData(incomeData, true);
-          balanceChart.series[1].setData(expenseData, true);
-          balanceChart.xAxis[0].setCategories(dates, true);
-          updateChartTheme(balanceChart); // Apply theme changes
-        } else {
-          balanceChart = Highcharts.chart('balanceChart', {
-            chart: {type: 'column'},
-            title: { text: 'Income vs Expenses' },
-            xAxis: { categories: dates },
-            yAxis: { title: { text: 'Amount ($)'} },
-            series: [
-              {
-                name: 'Income', data: incomeData,
-                color: graphColors.income
-              },
-              {
-                name: 'Expenses', data: expenseData,
-                color: graphColors.expense
-              },
-            ]
-          });
-          updateChartTheme(balanceChart); // Apply theme changes
-        }
+    // Group expenses by category for expense chart
+    let expenseByCategory = {};
+    filteredTx.forEach((tx) => {
+      if (tx.type === "expense") {
+        if (!expenseByCategory[tx.category]) expenseByCategory[tx.category] = 0;
+        expenseByCategory[tx.category] += parseFloat(tx.amount);
       }
-  
-      // Group expenses by category for expense chart
-      let expenseByCategory = {};
-      filteredTx.forEach((tx) => {
-        if (tx.type === "expense") {
-          if (!expenseByCategory[tx.category]) expenseByCategory[tx.category] = 0;
-          expenseByCategory[tx.category] += parseFloat(tx.amount);
-        }
-      });
-  
+    });
+
       const categoryData = Object.keys(expenseByCategory).map((cat) => ({
         name: cat,
-        y: expenseByCategory[cat]
+        y: expenseByCategory[cat],
       }));
   
-      // Update or create the expense chart
-      const categoryChartEl = document.getElementById('categoryChart');
+    // Update or create the expense chart
+      const categoryChartEl = document.getElementById("categoryChart");
       if (categoryChartEl) {
         if (expenseChart) {
           expenseChart.series[0].setData(categoryData, true);
           updateChartTheme(expenseChart); // Apply theme changes
         } else {
-          expenseChart = Highcharts.chart('categoryChart', {
-            chart: { type: 'pie' },
-            title: { text: 'Expenses by Category' },
-            series: [{ name: 'Expenses', colorByPoint: true, data: categoryData }]
+          expenseChart = Highcharts.chart("categoryChart", {
+            chart: { type: "pie" },
+            title: { text: "Expenses by Category" },
+            series: [{ name: "Expenses", colorByPoint: true, data: categoryData }],
           });
           updateChartTheme(expenseChart); // Apply theme changes
         }
@@ -465,25 +490,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // The browser will handle navigation automatically
       });
     });
-    // Contact Form Validation
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-
-        if (!name || !email || !message) {
-          alert('Please fill out all fields.');
-          return;
-        }
-
-        // Simulate form submission
-        alert('Thank you for your message!');
-        contactForm.reset();
-      });
-    }
   
     function updateTransactionTable() {
       renderTransactions();
