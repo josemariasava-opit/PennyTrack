@@ -45,14 +45,14 @@ h1 { font-size: 1.8rem; }
 h2 { font-size: 1.5rem; }
 h3 { font-size: 1.2rem; }
 
-a {
+a:not(.nav-link):not(.brand) {
   color: var(--accent);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-/* Link hover state */
-a:hover {
+/* Hover state for content links */
+a:not(.nav-link):not(.brand):hover {
   color: #2a7a94;
   text-decoration: underline;
 }
