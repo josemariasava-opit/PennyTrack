@@ -45,6 +45,28 @@ h1 { font-size: 1.8rem; }
 h2 { font-size: 1.5rem; }
 h3 { font-size: 1.2rem; }
 
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Link hover state */
+a:hover {
+  color: #2a7a94;
+  text-decoration: underline;
+}
+
+/* Link visited state - optional */
+a:visited {
+  color: #3d8ca6;
+}
+
+/* Link active state - optional */
+a:active {
+  color: #1d566a;
+}
+
 /* Modern Header */
 .modern-header {
   background-color: var(--bg-primary);
