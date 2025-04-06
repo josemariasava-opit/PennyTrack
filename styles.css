@@ -58,7 +58,7 @@ a:not(.nav-link):not(.brand):hover {
 }
 
 /* Link visited state - optional */
-a:visited {
+a:not(.nav-link):not(.brand):visited {
   color: #3d8ca6;
 }
 
