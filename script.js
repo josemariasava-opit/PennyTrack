@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // DARK MODE TOGGLE
   const darkToggle = document.getElementById("darkModeToggle");
+
   // Chart variables declared at the right scope level
   let balanceChart; // Highcharts instance for the balance graph
   let expenseChart; // Highcharts instance for the expense chart
@@ -32,6 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Hamburger Menu Toggle
+  const navbarToggle = document.querySelector(".navbar-toggle"); 
+  const navLinks = document.querySelector(".nav-links"); 
+
+  if (navbarToggle && navLinks) {
+    navbarToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  }
+
   // Export all transactions from localStorage as a CSV file
   function exportTransactionsCSV() {
     // Retrieve transactions (or an empty array if none exist)
@@ -58,9 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.removeChild(link);
   }
 
+  // Import transactions from CSV
   function importTransactionsFromCSV(csvData) {
     const rows = csvData.split("\n").slice(1); // Skip header row
     let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
     rows.forEach((row) => {
       if (!row.trim()) return; // Skip empty lines
       const [date, type, category, amount] = row.split(",");
@@ -73,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     });
+
     localStorage.setItem("transactions", JSON.stringify(transactions));
     alert("Transactions imported successfully!");
     loadTransactions(); // Refresh the table
@@ -130,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Expenses", data: [3000], color: "#E65050" },
       ],
     });
+
     // Apply theme
     updateChartTheme(landingChart);
   }
@@ -147,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderTransactions() {
     const tbody = document.getElementById("transactionsBody");
     if (!tbody) return; // Guard clause if not on the tracker page
+
     tbody.innerHTML = "";
     transactions.forEach((tx, index) => {
       const row = document.createElement("tr");
@@ -179,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Populate form for editing a transaction
   function populateFormForEdit(index) {
     const tx = transactions[index];
     const dateEl = document.getElementById("date");
@@ -206,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Delete a transaction
   function deleteTransaction(index) {
     transactions.splice(index, 1);
     saveTransactions();
@@ -213,17 +231,15 @@ document.addEventListener("DOMContentLoaded", () => {
     updateDashboard();
   }
 
-  // Dashboard update:
-  // – Filter transactions by year and month from filter inputs.
-  // – Update balance graph and expense chart based on filtered data.
+  // Update dashboard charts and filters
   function updateDashboard() {
     const filterYearEl = document.getElementById("filterYear");
     const filterMonthEl = document.getElementById("filterMonth");
     if (!filterYearEl || !filterMonthEl) return; // Not on tracker page
-  
+
     const filterYear = filterYearEl.value;
     const filterMonth = filterMonthEl.value;
-  
+
     let filteredTx = transactions.filter((tx) => {
       const txDate = new Date(tx.date);
       let valid = true;
@@ -233,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return valid;
     });
 
-      /// Group transactions by month
+    // Group transactions by month
     let monthlyData = {};
     filteredTx.forEach((tx) => {
       const dateKey = `${new Date(tx.date).getFullYear()}-${String(
@@ -244,13 +260,12 @@ document.addEventListener("DOMContentLoaded", () => {
       else monthlyData[dateKey].expense += parseFloat(tx.amount);
     });
 
-      // Sort months chronologically
+    // Sort months chronologically
     const sortedMonths = Object.keys(monthlyData).sort();
 
     // Prepare income and expense data for the chart
     const incomeData = sortedMonths.map((month) => monthlyData[month].income);
     const expenseData = sortedMonths.map((month) => monthlyData[month].expense);
-
 
     // Update or create the balance graph
     const balanceChartEl = document.getElementById("balanceChart");
@@ -294,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateChartTheme(balanceChart); // Apply theme changes
       }
     }
-  
+
     // Group expenses by category for expense chart
     let expenseByCategory = {};
     filteredTx.forEach((tx) => {
@@ -304,199 +319,205 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-      const categoryData = Object.keys(expenseByCategory).map((cat) => ({
-        name: cat,
-        y: expenseByCategory[cat],
-      }));
-  
+    const categoryData = Object.keys(expenseByCategory).map((cat) => ({
+      name: cat,
+      y: expenseByCategory[cat],
+    }));
+
     // Update or create the expense chart
-      const categoryChartEl = document.getElementById("categoryChart");
-      if (categoryChartEl) {
-        if (expenseChart) {
-          expenseChart.series[0].setData(categoryData, true);
-          updateChartTheme(expenseChart); // Apply theme changes
-        } else {
-          expenseChart = Highcharts.chart("categoryChart", {
-            chart: { type: "pie" },
-            title: { text: "Expenses by Category" },
-            series: [{ name: "Expenses", colorByPoint: true, data: categoryData }],
-          });
-          updateChartTheme(expenseChart); // Apply theme changes
-        }
+    const categoryChartEl = document.getElementById("categoryChart");
+    if (categoryChartEl) {
+      if (expenseChart) {
+        expenseChart.series[0].setData(categoryData, true);
+        updateChartTheme(expenseChart); // Apply theme changes
+      } else {
+        expenseChart = Highcharts.chart("categoryChart", {
+          chart: { type: "pie" },
+          title: { text: "Expenses by Category" },
+          series: [{ name: "Expenses", colorByPoint: true, data: categoryData }],
+        });
+        updateChartTheme(expenseChart); // Apply theme changes
       }
     }
-    
-    // Apply theme to charts based on current mode (light/dark)
-    function updateChartTheme(chartInstance) {
-      if (!chartInstance) return; // Safety first 
-      
-      const isDarkMode = document.documentElement.classList.contains("dark-mode");
-      
-      chartInstance.update({
-        chart: {
-          backgroundColor: isDarkMode ? graphColors.darkBackground : graphColors.lightBackground,
-        },
-        title: { 
-          style: { color: isDarkMode ? graphColors.darkText : graphColors.lightText } 
-        },
-        xAxis: {
-          lineColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Axis line color
-          tickColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Tick marks color
-          labels: {
-            style: {
-              color: isDarkMode ? graphColors.darkText : graphColors.lightText,
-            }
+  }
+
+  // Apply theme to charts based on current mode (light/dark)
+  function updateChartTheme(chartInstance) {
+    if (!chartInstance) return; // Safety first
+    const isDarkMode = document.documentElement.classList.contains("dark-mode");
+    chartInstance.update({
+      chart: {
+        backgroundColor: isDarkMode ? graphColors.darkBackground : graphColors.lightBackground,
+      },
+      title: {
+        style: { color: isDarkMode ? graphColors.darkText : graphColors.lightText },
+      },
+      xAxis: {
+        lineColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Axis line color
+        tickColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Tick marks color
+        labels: {
+          style: {
+            color: isDarkMode ? graphColors.darkText : graphColors.lightText,
           },
-          title: {
-            style: {
-              color: isDarkMode ? graphColors.darkText : graphColors.lightText
-            }
-          }
         },
-        yAxis: { 
-          lineColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Axis line color
-          tickColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Tick marks color
-          gridLineColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)', // Better grid line visibility
-          labels: { 
-            style: { color: isDarkMode ? graphColors.darkText : graphColors.lightText } 
+        title: {
+          style: {
+            color: isDarkMode ? graphColors.darkText : graphColors.lightText,
           },
-          title: {
-            style: {
-              color: isDarkMode ? graphColors.darkText : graphColors.lightText
-            }
-          }
-        }, 
-        plotOptions: {
-          series: {
-            dataLabels: {
-              style: { color: isDarkMode ? graphColors.darkText : graphColors.lightText }
-            }
-          }
         },
-        legend: {
-          itemStyle: { color: isDarkMode ? graphColors.darkText : graphColors.lightText }
-        }
-      });
-    }
-  
-    // Handle transaction form submission
-    const transactionForm = document.getElementById("transactionForm");
-    if (transactionForm) {
-      transactionForm.addEventListener("submit", (e) => {
-        e.preventDefault();
+      },
+      yAxis: {
+        lineColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Axis line color
+        tickColor: isDarkMode ? graphColors.darkText : graphColors.lightText, // Tick marks color
+        gridLineColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)", // Better grid line visibility
+        labels: {
+          style: { color: isDarkMode ? graphColors.darkText : graphColors.lightText },
+        },
+        title: {
+          style: {
+            color: isDarkMode ? graphColors.darkText : graphColors.lightText,
+          },
+        },
+      },
+      plotOptions: {
+        series: {
+          dataLabels: {
+            style: { color: isDarkMode ? graphColors.darkText : graphColors.lightText },
+          },
+        },
+      },
+      legend: {
+        itemStyle: { color: isDarkMode ? graphColors.darkText : graphColors.lightText },
+      },
+    });
+  }
+
+  // Handle transaction form submission
+  const transactionForm = document.getElementById("transactionForm");
+  if (transactionForm) {
+    transactionForm.addEventListener("submit", (e) => {
+      e.preventDefault();
         
-        const dateVal = document.getElementById("date").value;
-        const typeVal = document.getElementById("type").value;
-        const categoryVal = document.getElementById("category").value;
-        const amountVal = parseFloat(document.getElementById("amount").value);
-  
-        if (editingIndex !== null) {
-          transactions[editingIndex] = { date: dateVal, type: typeVal, category: categoryVal, amount: amountVal };
-          editingIndex = null;
-          document.getElementById("saveTransaction").innerText = "Add Transaction";
-          document.getElementById("cancelEdit").style.display = "none";
-        } else {
-          transactions.push({ date: dateVal, type: typeVal, category: categoryVal, amount: amountVal });
-        }
-        // Calling functions 
-        saveTransactions();
-        renderTransactions();
-        updateDashboard();
-        
-        transactionForm.reset();
-      });
-    }
-  
-    // Cancel edit
-    const cancelEditBtn = document.getElementById("cancelEdit");
-    if (cancelEditBtn) {
-      cancelEditBtn.addEventListener("click", () => {
+      const dateVal = document.getElementById("date").value;
+      const typeVal = document.getElementById("type").value;
+      const categoryVal = document.getElementById("category").value;
+      const amountVal = parseFloat(document.getElementById("amount").value);
+
+      if (editingIndex !== null) {
+        transactions[editingIndex] = {
+          date: dateVal,
+          type: typeVal,
+          category: categoryVal,
+          amount: amountVal,
+        };
         editingIndex = null;
-        transactionForm.reset();
-        
         document.getElementById("saveTransaction").innerText = "Add Transaction";
         document.getElementById("cancelEdit").style.display = "none";
-      });
-    }
-  
-    // Collapsible Transactions Section
+      } else {
+        transactions.push({
+          date: dateVal,
+          type: typeVal,
+          category: categoryVal,
+          amount: amountVal,
+        });
+      }
+
+      // Calling functions
+      saveTransactions();
+      renderTransactions();
+      updateDashboard();
+      transactionForm.reset();
+    });
+  }
+
+  // Cancel edit
+  const cancelEditBtn = document.getElementById("cancelEdit");
+  if (cancelEditBtn) {
+    cancelEditBtn.addEventListener("click", () => {
+      editingIndex = null;
+      transactionForm.reset();
+      document.getElementById("saveTransaction").innerText = "Add Transaction";
+      document.getElementById("cancelEdit").style.display = "none";
+    });
+  }
+
+  // Collapsible Transactions Section
     const transactionsHeader = document.getElementById('transactionsHeader');
-    if (transactionsHeader) {
+  if (transactionsHeader) {
       transactionsHeader.addEventListener('click', () => {
         const tableContainer = document.querySelector('#transactionsTable');
-        tableContainer.style.display =
+      tableContainer.style.display =
           tableContainer.style.display === 'none' ? 'block' : 'none';
-      });
-    }
-  
-    // Filter inputs trigger dashboard updates
+    });
+  }
+
+  // Filter inputs trigger dashboard updates
     const filterYearEl = document.getElementById('filterYear');
     const filterMonthEl = document.getElementById('filterMonth');
-    if (filterYearEl) {
+  if (filterYearEl) {
       filterYearEl.addEventListener('change', updateDashboard);
-    }
-    if (filterMonthEl) {
+  }
+  if (filterMonthEl) {
       filterMonthEl.addEventListener('change', updateDashboard);
-    }
-  
-    // Event listener for Export CSV
-    const exportCSVBtn = document.getElementById("exportCSV");
-    if (exportCSVBtn) {
-      exportCSVBtn.addEventListener("click", exportTransactionsCSV);
-    }
-  
-    // Import CSV functionality
-    const importCSVButtonEl = document.getElementById("importCSVButton");
-    const importCSVEl = document.getElementById("importCSV");
+  }
+
+  // Event listener for Export CSV
+  const exportCSVBtn = document.getElementById("exportCSV");
+  if (exportCSVBtn) {
+    exportCSVBtn.addEventListener("click", exportTransactionsCSV);
+  }
+
+  // Import CSV functionality
+  const importCSVButtonEl = document.getElementById("importCSVButton");
+  const importCSVEl = document.getElementById("importCSV");
     
-    if (importCSVButtonEl && importCSVEl) {
+  if (importCSVButtonEl && importCSVEl) {
       importCSVButtonEl.addEventListener("click", function() {
-        importCSVEl.click();
-      });
-  
+      importCSVEl.click();
+    });
+
       importCSVEl.addEventListener("change", function(event) {
-        const file = event.target.files[0];
+      const file = event.target.files[0];
+      if (!file) {
+        alert("Please select a CSV file to import.");
+        return;
+      }
   
-        if (!file) {
-          alert("Please select a CSV file to import.");
-          return;
-        }
-  
-        const reader = new FileReader();
+      const reader = new FileReader();
         reader.onload = function(e) {
-          const csvData = e.target.result;
-          importTransactionsFromCSV(csvData);
-        };
-        reader.readAsText(file);
-      });
-    }
-  
-    // Smooth Scrolling for Navigation Links
+        const csvData = e.target.result;
+        importTransactionsFromCSV(csvData);
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  // Smooth Scrolling for Navigation Links
     document.querySelectorAll('.nav-link').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href'); // Get the href attribute
 
-        // Check if the link is for smooth scrolling (starts with '#')
+      // Check if the link is for smooth scrolling (starts with '#')
         if (href.startsWith('#')) {
-          e.preventDefault(); // Prevent default behavior only for internal links
-          const targetId = href.substring(1); // Remove the '#' to get the target ID
-          const targetElement = document.getElementById(targetId);
+        e.preventDefault(); // Prevent default behavior only for internal links
+        const targetId = href.substring(1); // Remove the '#' to get the target ID
+        const targetElement = document.getElementById(targetId);
 
-          if (targetElement) {
+        if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth' }); // Smooth scroll to the target
-          }
         }
-        // For external links (e.g., 'index.html', 'tracker.html'), do nothing
-        // The browser will handle navigation automatically
-      });
+      }
+      // For external links (e.g., 'index.html', 'tracker.html'), do nothing
+      // The browser will handle navigation automatically
     });
+  });
   
     function updateTransactionTable() {
       renderTransactions();
       updateDashboard();
     }
-  
-    // Initial render on page load
-    renderTransactions();
-    updateDashboard();
-  });
+
+  // Initial render on page load
+  renderTransactions();
+  updateDashboard();
+});
