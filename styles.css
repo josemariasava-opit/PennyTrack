@@ -33,57 +33,38 @@ body {
   margin: 0;
   padding: 0;
   transition: background-color 0.3s, color 0.3s ease;
+  -webkit-text-size-adjust: 100%; /* Prevents text size increase on orientation change */
 }
 
-h1,
-h2,
-h3 {
-  font-size: 1.5rem;
+h1, h2, h3 {
+  margin: 0.5rem 0;
   text-align: center;
 }
 
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
+
+/* Modern Header */
 .modern-header {
   background-color: var(--bg-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: static;
+  position: sticky; /* Changed from static to sticky for better UX */
   top: 0;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem; /* Reduced padding for better spacing */
-}
-
-/* Navbar */
-.navbar {
-  background-color: var(--bg-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: static;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0.75rem 1rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
+/* Logo and Brand */
 .logo-container {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-}
-
-.brand-text {
-  font-size: 1.2rem; /* Smaller font size for better scaling */
 }
 
 .brand {
@@ -93,22 +74,32 @@ h3 {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.5rem;
+}
+
+.brand-text {
+  font-size: 1.2rem;
 }
 
 .brand-icon {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
+}
+
+/* Navigation */
+.nav-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 2rem;
 }
 
 .nav-links {
-  display: flex;
-  gap: 2rem;
+  display: none; /* Hidden by default on mobile */
   list-style: none;
   margin: 0;
   padding: 0;
@@ -118,29 +109,26 @@ h3 {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border-radius: 6px;
   transition: background-color 0.3s;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
   background-color: var(--bg-secondary);
 }
 
-/* Hamburger Menu */
+/* Mobile Menu */
 .navbar-toggle {
-  display: none;
+  display: block;
   font-size: 1.5rem;
   cursor: pointer;
-  background-color: var(--bg-primary);
+  background-color: transparent;
   color: var(--text-primary);
   padding: 0.5rem;
-  border: none; 
-  /*transition: background-color 0.3s;*/
-}
-
-.navbar-toggle:hover {
-  background-color: var(--bg-secondary);
+  border: none;
+  margin-left: 0.5rem;
 }
 
 .theme-toggle {
@@ -150,84 +138,50 @@ h3 {
   font-size: 1.2rem;
   padding: 0.5rem;
   border-radius: 50%;
-  transition: background-color 0.3s;
+  margin-left: 0.5rem;
 }
 
-.theme-toggle:hover {
-  background-color: var(--bg-secondary);
+/* Mobile Navigation Menu */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--bg-primary);
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .modern-header {
-    padding: 0.4rem 1rem; /* Compact padding for smaller screens */
-  }
-
-  .brand-text {
-    font-size: 1.2rem; /* Smaller font size for smaller screens */
-  }
-
-  .brand-icon {
-    font-size: 1.2rem; /* Smaller icon size for smaller screens */
-  }
-
-  .nav-links {
-    display: none; /* Hide nav links by default */
-    flex-direction: column;
-    background: var(--bg-primary);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-links.active {
-    display: flex; /* Show nav links when active */
-  }
-
-  .navbar-toggle {
-    display: block; /* Show hamburger menu */
-  }
-
-  .theme-toggle {
-    margin-top: 1rem; /* Add some spacing on mobile */
-  }
+.nav-links.active {
+  display: flex;
 }
 
-@media (min-width: 768px) {
-  .modern-header {
-    padding: 1rem 4rem; /* Increase padding slightly for larger screens */
-  }
+.nav-links li {
+  width: 100%;
+}
 
-  .brand-text {
-    font-size: 1.8rem; /* Slightly larger font size for larger screens */
-  }
-
-  .brand-icon {
-    font-size: 2rem; /* Slightly larger icon size for larger screens */
-  }
-
-  .nav-links{
-    display: flex;
-    flex-direction: row;
-  }
-
-  .navbar-toggle{
-    display: none;
-  }
+.nav-links .nav-link {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Hero Section */
 .hero {
+  padding: 1.5rem 1rem;
   text-align: center;
-  padding: 2rem 1rem;
 }
 
 .hero-content {
+  width: 100%;
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .hero-image {
@@ -236,16 +190,16 @@ h3 {
 }
 
 .chart-preview {
-  margin: 1rem auto;
+  width: 100%;
   max-width: 400px;
-  height: 200px;
+  height: auto;
+  margin: 1rem auto;
 }
 
 /* Features & Cards */
 .features {
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
-  background: var(--bg-secondary);
 }
 
 .feature-cards {
@@ -265,7 +219,7 @@ h3 {
 
 .feature-list li {
   margin: 0.5rem 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
@@ -273,47 +227,55 @@ h3 {
   background: var(--card-bg);
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 300px;
   text-align: center;
+  margin: 0.5rem;
+  box-sizing: border-box;
 }
 
 .card h4 {
   margin: 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .card p {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
 /* Forms */
+.form-container {
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
 .input-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  max-width: 1000px;
-  margin: auto;
+  max-width: 100%;
+  margin: 0.5rem auto;
 }
 
 .input-group label {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
 }
 
 input,
 select,
 textarea {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border: 1px solid var(--border);
   border-radius: 4px;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 0.95rem;
   box-sizing: border-box;
 }
 
@@ -324,12 +286,22 @@ textarea:focus {
   border-color: var(--accent);
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+/* Date inputs need special handling */
+input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+}
+
+/* Fix for the Dropdown Calendar (Chrome/Safari) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.8;
 }
 
 /* Buttons */
@@ -342,7 +314,8 @@ textarea:focus {
   cursor: pointer;
   margin: 0.3rem;
   outline: none;
-  transition: opacity 0.3s;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
 }
 
 .btn:hover {
@@ -355,61 +328,79 @@ textarea:focus {
 }
 
 /* Tables */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
 table.striped {
   width: 100%;
   border-collapse: collapse;
   background: var(--card-bg);
   margin-top: 1rem;
+  min-width: 300px; /* Ensures table doesn't get too small */
 }
 
 table.striped th,
 table.striped td {
   border: 1px solid var(--border);
   padding: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: left;
+  white-space: nowrap;
 }
 
 table.striped tr td button {
-  padding: 0.2rem; /* Reduce button padding */
+  padding: 0.2rem;
+  font-size: 0.8rem;
 }
 
 /* Transaction Row Colors */
 .income-row {
   background-color: var(--success) !important;
+  color: white;
 }
 
 .expense-row {
   background-color: var(--error) !important;
   opacity: 0.9;
+  color: white;
 }
 
-/* Tracker Layout (Full Page) */
+/* Tracker Layout */
 .tracker-main {
   width: 100%;
   min-height: 100vh;
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 .tracker-layout {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .left-panel,
 .right-panel {
-  flex: 1;
-  padding: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 /* Chart Container */
 .chart-container {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   background: var(--chart-bg);
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 8px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Export Chart Button */
@@ -419,7 +410,7 @@ table.striped tr td button {
   right: 5px;
   z-index: 10;
   padding: 4px 8px;
-  font-size: 12px;
+  font-size: 0.75rem;
   background-color: var(--accent);
   color: #fff;
   border: none;
@@ -430,14 +421,28 @@ table.striped tr td button {
 /* Collapsible Transactions Section */
 #transactionsHeader {
   cursor: pointer;
+  padding: 0.5rem;
+  background-color: var(--bg-secondary);
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Import & Export Button Container */
 .import-export-container {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-top: 1rem;
+  justify-content: center;
+}
+
+.import-export-container .btn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
 }
 
 /* Hide Default File Input & Style Label */
@@ -445,54 +450,10 @@ table.striped tr td button {
   display: none;
 }
 
-/* Apply Theme to Input */
-input[type="date"] {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  padding: 0.5rem;
-  border-radius: 6px;
-  font-size: 14px;
-  box-sizing: border-box;
-  cursor: pointer;
-  outline: none;
-  transition: background-color 0.3s, color 0.3s, border 0.3s;
-}
-
-/* Dark Mode Date Input */
-body.dark-mode input[type="date"] {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border);
-}
-
-/* Fix for the Dropdown Calendar (Chrome/Safari) */
-body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-/* Fix Background of the Calendar in Dark Mode */
-body.dark-mode {
-  color-scheme: dark;
-}
-
-p {
-  font-size: 1rem;
-  text-align: center;
-}
-
-h3 {
-  text-align: center;
-}
-
-/* Improved Testimonials Layout */
+/* Testimonials Layout */
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   padding: 1rem;
 }
@@ -501,11 +462,14 @@ h3 {
 footer {
   background-color: var(--bg-primary);
   text-align: center;
-  padding: 0.5rem 0;
-  font-size: 0.9rem;
+  padding: 1rem 0;
+  font-size: 0.85rem;
   margin-top: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Secondary Button */
 .secondary-btn {
   background-color: var(--bg-secondary);
   color: var(--text-primary);
@@ -517,26 +481,27 @@ footer {
   color: #fff;
 }
 
-/* Center-Aligned Text */
+/* Center-Aligned Text & Lists */
 .centered-text {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   margin: 1rem auto;
   max-width: 800px;
+  padding: 0 1rem;
 }
 
-/* Center-Aligned Lists */
 .centered-list {
-  text-align: center;
+  text-align: left;
   list-style-position: inside;
-  padding: 0;
+  padding: 0 1.5rem;
   margin: 1rem auto;
   max-width: 800px;
 }
 
 .centered-list li {
   margin: 0.5rem 0;
+  font-size: 0.95rem;
 }
 
 /* Accent Link Styling */
@@ -549,97 +514,123 @@ footer {
   text-decoration: underline;
 }
 
-/* Larger CTA Button Styling */
+/* CTA Button Styling */
 .cta-button {
   display: inline-block;
-  padding: 1rem 2rem;
-  font-size: 1.25rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
   font-weight: bold;
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--accent);
+  background-color: var(--accent);
+  color: white;
+  border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin: 0.3rem;
+  margin: 1rem 0;
   outline: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-decoration: none;
   text-align: center;
+  width: auto;
+  max-width: 100%;
 }
 
 .cta-button:hover {
   transform: scale(1.05);
-  background-color: var(--accent);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .cta-button:active {
   transform: scale(0.98);
 }
 
-@media (max-width: 768px) {
-  .modern-header{
-    padding: 0.8rem 1.5rem; 
+/* Media Queries - Tablet */
+@media (min-width: 768px) {
+  .modern-header {
+    padding: 0.75rem 2rem;
   }
-
-  .brand-text{
+  
+  .brand-text {
     font-size: 1.4rem;
   }
-
-  .brand-icon{
+  
+  .brand-icon {
     font-size: 1.6rem;
   }
-
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.7rem; }
+  h3 { font-size: 1.4rem; }
+  
   .nav-links {
-    display: none; /* Hide nav links by default */
-    flex-direction: column;
-    background: var(--bg-primary);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    position: static;
+    width: auto;
+    box-shadow: none;
+    padding: 0;
+    gap: 1rem;
+    background: transparent;
   }
-
-  .nav-links.active {
-    display: flex; /* Show nav links when active */
+  
+  .nav-links .nav-link {
+    width: auto;
+    padding: 0.5rem 0.75rem;
   }
-
+  
   .navbar-toggle {
-    display: block; /* Show hamburger menu */
+    display: none;
   }
-
-  .theme-toggle {
-    margin-top: 1rem; /* Add some spacing on mobile */
-  }
-
-  .cta-button {
-    font-size: 1rem;
-    padding: 0.8rem 1.5rem;
-  }
-
+  
   .tracker-layout {
-    flex-direction: column;
+    flex-direction: row;
   }
+  
+  .left-panel, .right-panel {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .testimonial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .card {
+    margin: 0;
+  }
+  
+  .cta-button {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+  }
+}
 
-  .import-export-container {
-    flex-direction: column;
-    gap: 0.8rem;
+/* Media Queries - Desktop */
+@media (min-width: 1024px) {
+  .modern-header {
+    padding: 1rem 4rem;
   }
-
-  #transactionsTable {
-    display: block;
-    white-space: nowrap;
+  
+  .brand-text {
+    font-size: 1.8rem;
   }
-
-  .chart-container {
-    width: 100%;
-    height: auto;
+  
+  .brand-icon {
+    font-size: 2rem;
   }
-
-  footer {
-    font-size: 0.8rem;
+  
+  .nav-links {
+    gap: 2rem;
   }
+  
+  .testimonial-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .hero, .features {
+    padding: 3rem 1rem;
+  }
+  
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.5rem; }
 }
