@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         balanceChart = Highcharts.chart("balanceChart", {
           chart: { type: "column" },
-          title: { text: "Monthly Income vs Expenses" },
+          title: { text: "Income vs Expenses" },
           xAxis: {
             categories: sortedMonths, // Months as categories
             title: { text: "Month" },

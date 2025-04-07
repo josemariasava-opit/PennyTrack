@@ -45,24 +45,22 @@ h1 { font-size: 1.8rem; }
 h2 { font-size: 1.5rem; }
 h3 { font-size: 1.2rem; }
 
-a:not(.nav-link):not(.brand) {
+a:not(.nav-link):not(.brand):not(.cta-button) {
   color: var(--accent);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 /* Hover state for content links */
-a:not(.nav-link):not(.brand):hover {
+a:not(.nav-link):not(.brand):not(.cta-button):hover {
   color: #2a7a94;
   text-decoration: underline;
 }
 
-/* Link visited state - optional */
-a:not(.nav-link):not(.brand):visited {
+a:not(.nav-link):not(.brand):not(.cta-button):visited {
   color: #3d8ca6;
 }
 
-/* Link active state - optional */
 a:active {
   color: #1d566a;
 }
@@ -557,7 +555,7 @@ footer {
 }
 
 .cta-button:hover {
-  transform: scale(1.05);
+  transform: scale(1.10);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
